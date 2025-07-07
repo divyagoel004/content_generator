@@ -101,7 +101,7 @@ look at the content, analyze readability, improve readability - improve ARI Grad
 Make the language formal and professional for corporate client presentations.
 look at the content, analyze readability, improve readability - improve ARI Grade LevelDo not change the structure or remove required fields.
 Keep references intact.
-And in output you only return the JSON content without any additional text. and ARI Grade Level''',
+And in output you only return the JSON content without any additional text ,  ARI Grade Level''',
     llm_config=llm_config,
     code_execution_config=False,
     human_input_mode="NEVER",
