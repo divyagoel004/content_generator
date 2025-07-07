@@ -179,18 +179,34 @@ Use this search context:
 
         response_editor = editor_agent.generate_reply(messages=[{"role": "user", "content": gen_content}])
         edited_content = response_editor
+        if format_style == "ppt":
+                try:
+                    json_content = json.loads(edited_content)
+                    for slide_key, slide_data in json_content.items():
+                        if slide_key.startswith("Slide") and isinstance(slide_data, dict):
+                            diagram_code = f"graph TD; A[{slide_data['Title']}] --> B[{slide_data['Explanation'][:30]}...]"
+                            diagram_url = generate_diagram_from_text(diagram_code)
+                            if diagram_url:
+                                slide_data["Diagram"] = f"![Diagram]({diagram_url})"
+                except Exception:
+                    json_content = {"Raw Text Output": edited_content}
+        else:
+                try:
+                    json_content = json.loads(edited_content)
+                except Exception:
+                    json_content = {"Raw Text Output": edited_content}
 
-        try:
-            # json_content = json.loads(edited_content)
-            # Add diagram to every slide based on the explanation
-            for slide_key, slide_data in json_content.items():
-                if slide_key.startswith("Slide") and isinstance(slide_data, dict):
-                    diagram_code = f"graph TD; A[{slide_data['Title']}] --> B[{slide_data['Explanation'][:30]}...]"
-                    diagram_url = generate_diagram_from_text(diagram_code)
-                    if diagram_url:
-                        slide_data["Diagram"] = f"![Diagram]({diagram_url})"
-        except Exception:
-            json_content = {"Raw Text Output": edited_content}
+        # try:
+        #     # json_content = json.loads(edited_content)
+        #     # Add diagram to every slide based on the explanation
+        #     for slide_key, slide_data in json_content.items():
+        #         if slide_key.startswith("Slide") and isinstance(slide_data, dict):
+        #             diagram_code = f"graph TD; A[{slide_data['Title']}] --> B[{slide_data['Explanation'][:30]}...]"
+        #             diagram_url = generate_diagram_from_text(diagram_code)
+        #             if diagram_url:
+        #                 slide_data["Diagram"] = f"![Diagram]({diagram_url})"
+        # except Exception:
+        #     json_content = {"Raw Text Output": edited_content}
 
         st.markdown("<h3 style='color:#2E8B57;'>📄 Final Output (Presentation JSON)</h3>", unsafe_allow_html=True)
         st.json(json_content)
