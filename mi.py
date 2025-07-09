@@ -61,7 +61,7 @@ Each slide must follow this format:
     "Explanation": "Detailed explanation with facts or insights.",
     "Example": "Real-world or illustrative example.",
     "Bullet_points": "Include Bullet points about the concept in 1-2 lines each and about 4-5 bullet points .",
-    "Code": "Optional relevant code block or don't include code if not applicable."
+    "Code": "Optional relevant code block or don't include "code" key value pair if not applicable."
   },
   ...
   "References": ["https://source1", "https://source2"]
